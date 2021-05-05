@@ -21,6 +21,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
 		navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(importPicture))
 	}
 
+	// MARK: - IBActions
 	@IBAction func intensityChanged(_ sender: UISlider) {
 	}
 
@@ -29,6 +30,16 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
 
 	@IBAction func save(_ sender: UIButton) {
 	}
+
+	// MARK: - ImagePicker Delegate Methods
+
+	func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+		guard let image = info[.editedImage] as? UIImage else { return }
+		dismiss(animated: true)
+		currentImage = image
+	}
+
+	// MARK: - Private Methods
 
 	@objc func importPicture() {
 		let picker = UIImagePickerController()
