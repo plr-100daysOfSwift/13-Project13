@@ -17,6 +17,8 @@ class ViewController: UIViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		title = "Instafilter"
+
+		navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(importPicture))
 	}
 
 	@IBAction func intensityChanged(_ sender: UISlider) {
@@ -26,6 +28,10 @@ class ViewController: UIViewController {
 	}
 
 	@IBAction func save(_ sender: UIButton) {
+	}
+
+	@objc func importPicture() {
+		//
 	}
 
 }
