@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
 
 	@IBOutlet var imageView: UIImageView!
 	@IBOutlet var intensity: UISlider!
@@ -31,7 +31,10 @@ class ViewController: UIViewController {
 	}
 
 	@objc func importPicture() {
-		//
+		let picker = UIImagePickerController()
+		picker.allowsEditing = true
+		picker.delegate = self
+		present(picker, animated: true)
 	}
 
 }
