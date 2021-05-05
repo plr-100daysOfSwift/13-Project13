@@ -51,6 +51,9 @@
                                     <constraint firstAttribute="width" constant="120" id="zhX-Ky-SUG"/>
                                 </constraints>
                                 <state key="normal" title="Change Filter"/>
+                                <connections>
+                                    <action selector="changeFilter:" destination="BYZ-38-t0r" eventType="touchUpInside" id="s6r-aZ-CiV"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HS4-5v-AVT">
                                 <rect key="frame" x="338" y="605" width="60" height="44"/>
@@ -58,6 +61,9 @@
                                     <constraint firstAttribute="width" constant="60" id="jGf-Sg-lvJ"/>
                                 </constraints>
                                 <state key="normal" title="Save"/>
+                                <connections>
+                                    <action selector="save:" destination="BYZ-38-t0r" eventType="touchUpInside" id="mkn-9J-JoO"/>
+                                </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
