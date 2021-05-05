@@ -17,12 +17,14 @@ class ViewController: UIViewController {
 		// Do any additional setup after loading the view.
 	}
 
+	@IBAction func intensityChanged(_ sender: UISlider) {
+	}
+
 	@IBAction func changeFilter(_ sender: UIButton) {
 	}
 
 	@IBAction func save(_ sender: UIButton) {
 	}
-	
 
 }
 
