@@ -51,11 +51,14 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
 			popoverController.sourceView = sender
 			popoverController.sourceRect = sender.bounds
 		}
-		
+
 		present(ac, animated: true)
 	}
 
 	@IBAction func save(_ sender: UIButton) {
+		guard let image = imageView.image else { return }
+		UIImageWriteToSavedPhotosAlbum(image, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
+
 	}
 
 	// MARK:- ImagePicker Delegate Methods
@@ -102,6 +105,18 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
 		let beginImage = CIImage(image: currentImage)
 		currentFilter.setValue(beginImage, forKey: kCIInputImageKey)
 		applyProcessing()
+	}
+
+	@objc func image(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
+		if let error = error {
+			let ac = UIAlertController(title: "Save error", message: error.localizedDescription, preferredStyle: .alert)
+			ac.addAction(UIAlertAction(title: "OK", style: .default))
+			present(ac, animated: true)
+		} else {
+			let ac = UIAlertController(title: "Saved", message: "The altered image has been saved to the photos library.", preferredStyle: .alert)
+			ac.addAction(UIAlertAction(title: "OK", style: .default))
+			present(ac, animated: true)
+		}
 	}
 
 }
