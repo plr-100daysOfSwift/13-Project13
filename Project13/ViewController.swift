@@ -37,6 +37,16 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
 	}
 
 	@IBAction func changeFilter(_ sender: UIButton) {
+		let ac = UIAlertController(title: "Choose filter", message: nil, preferredStyle: .alert)
+		ac.addAction(UIAlertAction(title: "CIBumpDistortion", style: .default, handler: setFilter))
+		ac.addAction(UIAlertAction(title: "CIGaussianBlur", style: .default, handler: setFilter))
+		ac.addAction(UIAlertAction(title: "CIPixellate", style: .default, handler: setFilter))
+		ac.addAction(UIAlertAction(title: "CISepiaTone", style: .default, handler: setFilter))
+		ac.addAction(UIAlertAction(title: "CITwirlDistortion", style: .default, handler: setFilter))
+		ac.addAction(UIAlertAction(title: "CIUnsharpMask", style: .default, handler: setFilter))
+		ac.addAction(UIAlertAction(title: "CIVignette", style: .default, handler: setFilter))
+		ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+		present(ac, animated: true)
 	}
 
 	@IBAction func save(_ sender: UIButton) {
@@ -65,8 +75,19 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
 	}
 
 	func applyProcessing() {
-		//
+		guard let image = currentFilter.outputImage else { return }
+		currentFilter.setValue(intensity.value, forKey: kCIInputIntensityKey)
+
+		if let cgimg = context.createCGImage(image, from: image.extent) {
+			let processedImage = UIImage(cgImage: cgimg)
+			imageView.image = processedImage
+		}
 	}
+
+	func setFilter(action: UIAlertAction) {
+
+	}
+
 }
 
 
