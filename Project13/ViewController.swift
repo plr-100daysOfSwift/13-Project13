@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import CoreImage
 
 class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
 
@@ -13,15 +14,24 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
 	@IBOutlet var intensity: UISlider!
 
 	var currentImage: UIImage!
+	var context: CIContext!
+	var currentFilter: CIFilter!
+
+	// MARK:- Life Cycle
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		title = "Instafilter"
 
 		navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(importPicture))
+
+		context = CIContext()
+		currentFilter = CIFilter(name: "CISepiaTone")
+
 	}
 
-	// MARK: - IBActions
+	// MARK:- IBActions
+	
 	@IBAction func intensityChanged(_ sender: UISlider) {
 	}
 
@@ -31,7 +41,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
 	@IBAction func save(_ sender: UIButton) {
 	}
 
-	// MARK: - ImagePicker Delegate Methods
+	// MARK:- ImagePicker Delegate Methods
 
 	func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
 		guard let image = info[.editedImage] as? UIImage else { return }
@@ -39,7 +49,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
 		currentImage = image
 	}
 
-	// MARK: - Private Methods
+	// MARK:- Private Methods
 
 	@objc func importPicture() {
 		let picker = UIImagePickerController()
