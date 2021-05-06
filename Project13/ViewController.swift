@@ -46,6 +46,12 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
 		ac.addAction(UIAlertAction(title: "CIUnsharpMask", style: .default, handler: setFilter))
 		ac.addAction(UIAlertAction(title: "CIVignette", style: .default, handler: setFilter))
 		ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+
+		if let popoverController = ac.popoverPresentationController {
+			popoverController.sourceView = sender
+			popoverController.sourceRect = sender.bounds
+		}
+		
 		present(ac, animated: true)
 	}
 
