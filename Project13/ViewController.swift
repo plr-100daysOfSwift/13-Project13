@@ -108,17 +108,16 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
 	}
 
 	@objc func image(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
+		let ac: UIAlertController
+
 		if let error = error {
-			let ac = UIAlertController(title: "Save error", message: error.localizedDescription, preferredStyle: .alert)
-			ac.addAction(UIAlertAction(title: "OK", style: .default))
-			present(ac, animated: true)
+			ac = UIAlertController(title: "Save error", message: error.localizedDescription, preferredStyle: .alert)
 		} else {
-			let ac = UIAlertController(title: "Saved", message: "The altered image has been saved to the photos library.", preferredStyle: .alert)
-			ac.addAction(UIAlertAction(title: "OK", style: .default))
-			present(ac, animated: true)
+			ac = UIAlertController(title: "Saved", message: "The altered image has been saved to the photos library.", preferredStyle: .alert)
 		}
+		ac.addAction(UIAlertAction(title: "OK", style: .default))
+
+		present(ac, animated: true)
 	}
 
 }
-
-
