@@ -89,8 +89,8 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
 		if inputKeys.contains(kCIInputCenterKey) { currentFilter.setValue(CIVector(x: currentImage.size.width / 2, y: currentImage.size.height / 2), forKey: kCIInputCenterKey)}
 
 		guard let image = currentFilter.outputImage else { return }
-		if let cgimg = context.createCGImage(image, from: image.extent) {
-			let processedImage = UIImage(cgImage: cgimg)
+		if let cgImage = context.createCGImage(image, from: image.extent) {
+			let processedImage = UIImage(cgImage: cgImage)
 			imageView.image = processedImage
 		}
 	}
