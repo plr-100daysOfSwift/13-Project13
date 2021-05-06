@@ -31,8 +31,9 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
 	}
 
 	// MARK:- IBActions
-	
+
 	@IBAction func intensityChanged(_ sender: UISlider) {
+		applyProcessing()
 	}
 
 	@IBAction func changeFilter(_ sender: UIButton) {
@@ -47,6 +48,11 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
 		guard let image = info[.editedImage] as? UIImage else { return }
 		dismiss(animated: true)
 		currentImage = image
+
+		let beginImage = CIImage(image: currentImage)
+		currentFilter.setValue(beginImage, forKey: kCIInputImageKey)
+		applyProcessing()
+
 	}
 
 	// MARK:- Private Methods
@@ -58,5 +64,9 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
 		present(picker, animated: true)
 	}
 
+	func applyProcessing() {
+		//
+	}
 }
+
 
