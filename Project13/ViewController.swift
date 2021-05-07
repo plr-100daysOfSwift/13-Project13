@@ -56,7 +56,13 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
 	}
 
 	@IBAction func save(_ sender: UIButton) {
-		guard let image = imageView.image else { return }
+		guard let image = imageView.image else {
+			let ac = UIAlertController(title: "No image", message: "Please load an image before saving.", preferredStyle: .alert)
+			ac .addAction(UIAlertAction(title: "OK", style: .cancel))
+			present(ac, animated: true)
+			return
+
+		}
 		UIImageWriteToSavedPhotosAlbum(image, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
 
 	}
