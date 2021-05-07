@@ -18,6 +18,16 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
 	var context: CIContext!
 	var currentFilter: CIFilter!
 
+	enum Filter: String, CaseIterable {
+		case CIBumpDistortion
+		case CIGaussianBlur
+		case CIPixellate
+		case CISepiaTone
+		case CITwirlDistortion
+		case CIUnsharpMask
+		case CIVignette
+	}
+
 	// MARK:- Life Cycle
 
 	override func viewDidLoad() {
@@ -27,7 +37,8 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
 		navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(importPicture))
 
 		context = CIContext()
-		currentFilter = CIFilter(name: "CISepiaTone")
+		let defaultFilter = Filter.CISepiaTone
+		currentFilter = CIFilter(name: defaultFilter.rawValue)
 
 	}
 
@@ -39,13 +50,9 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
 
 	@IBAction func changeFilter(_ sender: UIButton) {
 		let ac = UIAlertController(title: "Choose filter", message: nil, preferredStyle: .actionSheet)
-		ac.addAction(UIAlertAction(title: "CIBumpDistortion", style: .default, handler: setFilter))
-		ac.addAction(UIAlertAction(title: "CIGaussianBlur", style: .default, handler: setFilter))
-		ac.addAction(UIAlertAction(title: "CIPixellate", style: .default, handler: setFilter))
-		ac.addAction(UIAlertAction(title: "CISepiaTone", style: .default, handler: setFilter))
-		ac.addAction(UIAlertAction(title: "CITwirlDistortion", style: .default, handler: setFilter))
-		ac.addAction(UIAlertAction(title: "CIUnsharpMask", style: .default, handler: setFilter))
-		ac.addAction(UIAlertAction(title: "CIVignette", style: .default, handler: setFilter))
+		let _ = Filter.allCases.map {
+			ac.addAction(UIAlertAction(title: $0.rawValue, style: .default, handler: setFilter))
+		}
 		ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
 
 		if let popoverController = ac.popoverPresentationController {
