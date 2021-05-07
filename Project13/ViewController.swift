@@ -119,7 +119,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
 		if let error = error {
 			ac = UIAlertController(title: "Save error", message: error.localizedDescription, preferredStyle: .alert)
 		} else {
-			ac = UIAlertController(title: "Saved", message: "The altered image has been saved to the photos library.", preferredStyle: .alert)
+			ac = UIAlertController(title: "Saved", message: "The filtered image has been saved to the photos library.", preferredStyle: .alert)
 		}
 		ac.addAction(UIAlertAction(title: "OK", style: .default))
 
