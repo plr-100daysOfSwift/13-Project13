@@ -46,12 +46,15 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
 		let defaultFilter: CIFilter = CIFilter.sepiaTone()
 		currentFilter = defaultFilter
 		setFilterButtonTitle(currentFilter)
+		// TODO: Why is count 3 rather than 6?
 
 	}
 
 	// MARK:- IBActions
 
 	@IBAction func valueChanged(_ sender: UISlider) {
+		// TODO: Disable sliders if no image present
+		guard let _ = imageView.image else { return }
 		applyProcessing()
 	}
 
@@ -117,6 +120,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
 		if inputKeys.contains(kCIInputScaleKey) { currentFilter.setValue(intensity.value * 10, forKey: kCIInputScaleKey)}
 		if inputKeys.contains(kCIInputAngleKey) { currentFilter.setValue(intensity.value * 5, forKey: kCIInputAngleKey)}
 		if inputKeys.contains(kCIInputCenterKey) { currentFilter.setValue(CIVector(x: currentImage.size.width / 2, y: currentImage.size.height / 2), forKey: kCIInputCenterKey)}
+		// TODO: where is kCIInputCount?
 		if inputKeys.contains("inputCount") { currentFilter.setValue(count.value, forKey: "inputCount") }
 
 		guard let image = currentFilter.outputImage else { return }
