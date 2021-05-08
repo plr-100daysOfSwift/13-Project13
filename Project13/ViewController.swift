@@ -48,7 +48,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
 		context = CIContext()
 		let defaultFilter = Filter.CISepiaTone
 		currentFilter = CIFilter(name: defaultFilter.rawValue)
-		filterButton.setTitle("Filter: \(defaultFilter.title)", for: .normal)
+		setFilterButtonTitle(defaultFilter)
 
 	}
 
@@ -100,6 +100,10 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
 
 	// MARK:- Private Methods
 
+	fileprivate func setFilterButtonTitle(_ defaultFilter: ViewController.Filter) {
+		filterButton.setTitle("Filter: \(defaultFilter.title)", for: .normal)
+	}
+
 	@objc func importPicture() {
 		let picker = UIImagePickerController()
 		picker.allowsEditing = true
@@ -127,7 +131,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
 					let filter = Filter.allCases.first(where: {$0.title == actionTitle})
 					else { return }
 		currentFilter = CIFilter(name: filter.rawValue)
-		self.filterButton.setTitle("Filter: \(actionTitle)", for: .normal)
+		self.setFilterButtonTitle(filter)
 
 		guard currentImage != nil else { return }
 		let beginImage = CIImage(image: currentImage)
