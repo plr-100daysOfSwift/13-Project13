@@ -13,6 +13,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
 
 	@IBOutlet var imageView: UIImageView!
 	@IBOutlet var intensity: UISlider!
+	@IBOutlet var count: UISlider!
 	@IBOutlet var filterButton: UIButton!
 	
 	var currentImage: UIImage!
@@ -50,7 +51,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
 
 	// MARK:- IBActions
 
-	@IBAction func intensityChanged(_ sender: UISlider) {
+	@IBAction func valueChanged(_ sender: UISlider) {
 		applyProcessing()
 	}
 
@@ -116,6 +117,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
 		if inputKeys.contains(kCIInputScaleKey) { currentFilter.setValue(intensity.value * 10, forKey: kCIInputScaleKey)}
 		if inputKeys.contains(kCIInputAngleKey) { currentFilter.setValue(intensity.value * 5, forKey: kCIInputAngleKey)}
 		if inputKeys.contains(kCIInputCenterKey) { currentFilter.setValue(CIVector(x: currentImage.size.width / 2, y: currentImage.size.height / 2), forKey: kCIInputCenterKey)}
+		if inputKeys.contains("inputCount") { currentFilter.setValue(count.value, forKey: "inputCount") }
 
 		guard let image = currentFilter.outputImage else { return }
 		if let cgImage = context.createCGImage(image, from: image.extent) {
