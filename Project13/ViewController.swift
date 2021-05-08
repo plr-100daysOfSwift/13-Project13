@@ -7,6 +7,7 @@
 
 import UIKit
 import CoreImage
+import CoreImage.CIFilterBuiltins
 
 class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
 
@@ -28,12 +29,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
 		case CIVignette
 
 		var title: String {
-			let trimmed = String(self.rawValue.dropFirst(2))
-			let range = NSRange(location: 0, length: trimmed.utf16.count)
-			let pattern = "(?<!^)(?=[A-Z])"
-			let space = " "
-			let regex = try! NSRegularExpression(pattern: pattern)
-			return regex.stringByReplacingMatches(in: trimmed, options: [], range: range, withTemplate: space)
+			return CIFilter(name: self.rawValue)?.attributes["CIAttributeFilterDisplayName"] as! String
 		}
 	}
 
@@ -46,9 +42,9 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
 		navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(importPicture))
 
 		context = CIContext()
-		let defaultFilter = Filter.CISepiaTone
-		currentFilter = CIFilter(name: defaultFilter.rawValue)
-		setFilterButtonTitle(defaultFilter)
+		let defaultFilter: CIFilter = CIFilter.sepiaTone()
+		currentFilter = defaultFilter
+		setFilterButtonTitle(currentFilter)
 
 	}
 
@@ -100,8 +96,9 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
 
 	// MARK:- Private Methods
 
-	fileprivate func setFilterButtonTitle(_ defaultFilter: ViewController.Filter) {
-		filterButton.setTitle("Filter: \(defaultFilter.title)", for: .normal)
+	fileprivate func setFilterButtonTitle(_ filter: CIFilter) {
+		let title = filter.attributes["CIAttributeFilterDisplayName"] ?? "Unknown"
+		filterButton.setTitle("Filter: \(title)", for: .normal)
 	}
 
 	@objc func importPicture() {
@@ -131,7 +128,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
 					let filter = Filter.allCases.first(where: {$0.title == actionTitle})
 					else { return }
 		currentFilter = CIFilter(name: filter.rawValue)
-		self.setFilterButtonTitle(filter)
+		self.setFilterButtonTitle(currentFilter)
 
 		guard currentImage != nil else { return }
 		let beginImage = CIImage(image: currentImage)
