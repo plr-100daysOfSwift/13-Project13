@@ -26,6 +26,10 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
 		case CITwirlDistortion
 		case CIUnsharpMask
 		case CIVignette
+
+		var title: String {
+			return String(self.rawValue.dropFirst(2))
+		}
 	}
 
 	// MARK:- Life Cycle
@@ -51,7 +55,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
 	@IBAction func changeFilter(_ sender: UIButton) {
 		let ac = UIAlertController(title: "Choose filter", message: nil, preferredStyle: .actionSheet)
 		let _ = Filter.allCases.map {
-			ac.addAction(UIAlertAction(title: $0.rawValue, style: .default, handler: setFilter))
+			ac.addAction(UIAlertAction(title: $0.title, style: .default, handler: setFilter))
 		}
 		ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
 
@@ -114,8 +118,10 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
 
 	func setFilter(action: UIAlertAction) {
 		guard currentImage != nil else { return }
-		guard let actionTitle = action.title else { return }
-		currentFilter = CIFilter(name: actionTitle)
+		guard let actionTitle = action.title,
+					let filter = Filter.allCases.first(where: {$0.title == actionTitle})
+					else { return }
+		currentFilter = CIFilter(name: filter.rawValue)
 		let beginImage = CIImage(image: currentImage)
 		currentFilter.setValue(beginImage, forKey: kCIInputImageKey)
 		applyProcessing()
