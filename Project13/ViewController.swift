@@ -25,7 +25,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
 		case CIPixellate
 		case CISepiaTone
 		case CITwirlDistortion
-		case CIUnsharpMask
+		case CIKaleidoscope
 		case CIVignette
 
 		var title: String {
@@ -114,6 +114,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
 		if inputKeys.contains(kCIInputIntensityKey) { currentFilter.setValue(intensity.value, forKey: kCIInputIntensityKey)}
 		if inputKeys.contains(kCIInputRadiusKey) { currentFilter.setValue(intensity.value * 200, forKey: kCIInputRadiusKey)}
 		if inputKeys.contains(kCIInputScaleKey) { currentFilter.setValue(intensity.value * 10, forKey: kCIInputScaleKey)}
+		if inputKeys.contains(kCIInputAngleKey) { currentFilter.setValue(intensity.value * 5, forKey: kCIInputAngleKey)}
 		if inputKeys.contains(kCIInputCenterKey) { currentFilter.setValue(CIVector(x: currentImage.size.width / 2, y: currentImage.size.height / 2), forKey: kCIInputCenterKey)}
 
 		guard let image = currentFilter.outputImage else { return }
