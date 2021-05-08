@@ -118,14 +118,15 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
 	}
 
 	func setFilter(action: UIAlertAction) {
-		guard currentImage != nil else { return }
 		guard let actionTitle = action.title,
 					let filter = Filter.allCases.first(where: {$0.title == actionTitle})
 					else { return }
 		currentFilter = CIFilter(name: filter.rawValue)
+		self.filterButton.setTitle("Filter: \(actionTitle)", for: .normal)
+
+		guard currentImage != nil else { return }
 		let beginImage = CIImage(image: currentImage)
 		currentFilter.setValue(beginImage, forKey: kCIInputImageKey)
-		self.filterButton.setTitle("Filter: \(actionTitle)", for: .normal)
 		applyProcessing()
 	}
 
