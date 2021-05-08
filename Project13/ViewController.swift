@@ -28,7 +28,12 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
 		case CIVignette
 
 		var title: String {
-			return String(self.rawValue.dropFirst(2))
+			let trimmed = String(self.rawValue.dropFirst(2))
+			let range = NSRange(location: 0, length: trimmed.utf16.count)
+			let pattern = "(?<!^)(?=[A-Z])"
+			let space = " "
+			let regex = try! NSRegularExpression(pattern: pattern)
+			return regex.stringByReplacingMatches(in: trimmed, options: [], range: range, withTemplate: space)
 		}
 	}
 
