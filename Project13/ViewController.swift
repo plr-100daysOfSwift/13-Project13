@@ -12,7 +12,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
 
 	@IBOutlet var imageView: UIImageView!
 	@IBOutlet var intensity: UISlider!
-	@IBOutlet var changeFilter: UIButton!
+	@IBOutlet var filterButton: UIButton!
 	
 	var currentImage: UIImage!
 	var context: CIContext!
@@ -43,7 +43,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
 		context = CIContext()
 		let defaultFilter = Filter.CISepiaTone
 		currentFilter = CIFilter(name: defaultFilter.rawValue)
-		changeFilter.setTitle("Filter: \(defaultFilter.title)", for: .normal)
+		filterButton.setTitle("Filter: \(defaultFilter.title)", for: .normal)
 
 	}
 
@@ -125,7 +125,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
 		currentFilter = CIFilter(name: filter.rawValue)
 		let beginImage = CIImage(image: currentImage)
 		currentFilter.setValue(beginImage, forKey: kCIInputImageKey)
-		self.changeFilter.setTitle("Filter: \(actionTitle)", for: .normal)
+		self.filterButton.setTitle("Filter: \(actionTitle)", for: .normal)
 		applyProcessing()
 	}
 
