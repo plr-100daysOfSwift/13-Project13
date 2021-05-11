@@ -126,10 +126,14 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
 		guard let image = currentFilter.outputImage else { return }
 		if let cgImage = context.createCGImage(image, from: image.extent) {
 			let processedImage = UIImage(cgImage: cgImage)
-			imageView.alpha = 0
-			imageView.image = processedImage
-			UIView.animate(withDuration: 1, delay: 0.5, options: []) {
-				self.imageView.alpha = 1
+			if let _ = imageView.image {
+				imageView.image = processedImage
+			} else {
+				imageView.alpha = 0
+				imageView.image = processedImage
+				UIView.animate(withDuration: 1, delay: 0.5, options: []) {
+					self.imageView.alpha = 1
+				}
 			}
 		}
 	}
